@@ -22,6 +22,11 @@ const createServer = (httpServer) => {
     client.on('test-channel', (data) => {
       console.log('received socket data from client:', JSON.stringify(data));
     });
+
+    client.on('video-update', (data) => {
+        console.log('syncing video data', data);
+        client.broadcast.emit('video-update-client', data);
+    });
   });
 };
 
