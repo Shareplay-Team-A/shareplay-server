@@ -27,6 +27,14 @@ const createServer = (httpServer) => {
       console.log('video update data', data);
       client.broadcast.emit('video-update-client', data);
     });
+
+    client.on('join-room', (data) => {
+      const { roomId } = data;
+      console.log(roomId);
+
+      client.join(roomId);
+      client.to(roomId).emit('new-user-connected', data);
+    });
   });
 };
 
