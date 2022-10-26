@@ -25,7 +25,9 @@ const createServer = (httpServer) => {
 
     client.on('video-update', (data) => {
       console.log('video update data', data);
-      client.broadcast.emit('video-update-client', data);
+      const { roomId, ...rest } = data;
+
+      client.to(roomId).emit('video-update-client', rest);
     });
 
     client.on('join-room', (data) => {
