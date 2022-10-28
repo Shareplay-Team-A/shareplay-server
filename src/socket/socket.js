@@ -37,6 +37,14 @@ const createServer = (httpServer) => {
       client.join(roomId);
       client.to(roomId).emit('new-user-connected', data);
     });
+
+    client.on('join-room', (data) => {
+      const { roomId } = data;
+      console.log(roomId);
+
+      client.join(roomId);
+      client.to(roomId).emit('new-user-connected', data);
+    });
   });
 };
 
