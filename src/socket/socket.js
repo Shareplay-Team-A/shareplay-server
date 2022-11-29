@@ -24,24 +24,16 @@ const createServer = (httpServer) => {
     });
 
     client.on('video-update', (data) => {
+      const { roomId, action, time } = data;
+      const newData = { action, time };
+      console.log('room id', roomId);
       console.log('video update data', data);
-      const { roomId, ...rest } = data;
-
-      client.to(roomId).emit('video-update-client', rest);
+      client.to(roomId).emit('video-update-client', newData);
     });
 
     client.on('join-room', (data) => {
       const { roomId } = data;
       console.log(roomId);
-
-      client.join(roomId);
-      client.to(roomId).emit('new-user-connected', data);
-    });
-
-    client.on('join-room', (data) => {
-      const { roomId } = data;
-      console.log(roomId);
-
       client.join(roomId);
       client.to(roomId).emit('new-user-connected', data);
     });
